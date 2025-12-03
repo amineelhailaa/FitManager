@@ -1,0 +1,201 @@
+/* Additional custom styles for GymManager */
+
+/* Smooth transitions */
+* {
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Modal animations */
+.modal-enter {
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Sidebar hover effects */
+aside nav a {
+    position: relative;
+    overflow: hidden;
+}
+
+aside nav a::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background-color: #10b981;
+    transform: scaleY(0);
+    transition: transform 0.2s ease;
+}
+
+aside nav a:hover::before,
+aside nav a.active::before {
+    transform: scaleY(1);
+}
+
+/* Card hover effects */
+.card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Table row hover */
+tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+/* Button ripple effect */
+button {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Form focus states */
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+/* Status badges */
+.badge-bon {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.badge-moyen {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.badge-remplacer {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* Category colors */
+.cat-yoga {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+.cat-cardio {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+.cat-musculation {
+    background-color: #ffedd5;
+    color: #9a3412;
+}
+.cat-pilates {
+    background-color: #ede9fe;
+    color: #5b21b6;
+}
+.cat-crossfit {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+/* Loading spinner */
+.spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #10b981;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Toast notifications */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 16px 24px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    z-index: 1000;
+    animation: slideIn 0.3s ease;
+}
+
+.toast-success {
+    background-color: #10b981;
+}
+.toast-error {
+    background-color: #ef4444;
+}
+.toast-warning {
+    background-color: #f59e0b;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    aside {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    aside.open {
+        transform: translateX(0);
+    }
+
+    main {
+        margin-left: 0 !important;
+    }
+}
