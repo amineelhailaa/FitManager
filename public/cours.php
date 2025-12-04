@@ -332,7 +332,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Durée (minutes) *</label>
-                    <input type="number" id="duree" name="duree_cours" required min="15" max="180"
+                    <input type="number" class="dure" id="dur" name="duree_cours" required
                            class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
                            placeholder="60">
                 </div>
