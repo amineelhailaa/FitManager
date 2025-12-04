@@ -18,7 +18,6 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
 
 
-
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -127,175 +126,183 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     <!-- Equipment Cards Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="equipementGrid">
         <!-- PHP: foreach($equipements as $e): -->
+        <?php
+        $request = "SELECT * FROM equipements";
+        $all = mysqli_query($connection,$request);
+        while($row = mysqli_fetch_assoc($all)){
 
-        <!-- Card 1 - Bon état -->
+
+        ?>
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
             <div class="h-32 bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center">
                 <i class="fas fa-running text-white text-5xl opacity-80"></i>
             </div>
             <div class="p-5">
                 <div class="flex justify-between items-start mb-3">
-                    <h3 class="font-semibold text-gray-800">Tapis de course Pro</h3>
-                    <span class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-medium">Bon</span>
+                    <h3 class="font-semibold text-gray-800"><?php echo $row['nom_equipement'] ?></h3>
+                    <span class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-medium"><?php echo $row['etat'] ?></span>
                 </div>
-                <p class="text-sm text-gray-500 mb-3">Type: Tapis de course</p>
+                <p class="text-sm text-gray-500 mb-3"><?php echo $row['type'] ?></p>
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
                         <i class="fas fa-boxes text-gray-400"></i>
-                        <span class="text-sm text-gray-600">Qté: 8</span>
+                        <span class="text-sm text-gray-600"><?php echo $row['qte'] ?></span>
                     </div>
                     <div class="flex gap-2">
                         <button onclick="openEquipModal('edit', 1)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button onclick="confirmDeleteEquip(1)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition">
+                        <button onclick="confirmDeleteEquip(<?php echo $row['id_equipement'] ?>)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
                 </div>
             </div>
         </div>
+        <?php
+        }
+        ?>
 
-        <!-- Card 2 - Moyen état -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
-            <div class="h-32 bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
-                <i class="fas fa-biking text-white text-5xl opacity-80"></i>
-            </div>
-            <div class="p-5">
-                <div class="flex justify-between items-start mb-3">
-                    <h3 class="font-semibold text-gray-800">Vélo elliptique</h3>
-                    <span class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-medium">Moyen</span>
-                </div>
-                <p class="text-sm text-gray-500 mb-3">Type: Vélo</p>
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <i class="fas fa-boxes text-gray-400"></i>
-                        <span class="text-sm text-gray-600">Qté: 6</span>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="openEquipModal('edit', 2)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button onclick="confirmDeleteEquip(2)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Card 3 - À remplacer -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
-            <div class="h-32 bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center">
-                <i class="fas fa-dumbbell text-white text-5xl opacity-80"></i>
-            </div>
-            <div class="p-5">
-                <div class="flex justify-between items-start mb-3">
-                    <h3 class="font-semibold text-gray-800">Haltères 10kg</h3>
-                    <span class="px-2 py-1 bg-red-100 text-red-700 rounded-full text-xs font-medium">À remplacer</span>
-                </div>
-                <p class="text-sm text-gray-500 mb-3">Type: Haltères</p>
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <i class="fas fa-boxes text-gray-400"></i>
-                        <span class="text-sm text-gray-600">Qté: 4</span>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="openEquipModal('edit', 3)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button onclick="confirmDeleteEquip(3)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
-            <div class="h-32 bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center">
-                <i class="fas fa-futbol text-white text-5xl opacity-80"></i>
-            </div>
-            <div class="p-5">
-                <div class="flex justify-between items-start mb-3">
-                    <h3 class="font-semibold text-gray-800">Ballon fitness</h3>
-                    <span class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-medium">Bon</span>
-                </div>
-                <p class="text-sm text-gray-500 mb-3">Type: Ballon</p>
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <i class="fas fa-boxes text-gray-400"></i>
-                        <span class="text-sm text-gray-600">Qté: 10</span>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="openEquipModal('edit', 4)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button onclick="confirmDeleteEquip(4)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Card 5 -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
-            <div class="h-32 bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center">
-                <i class="fas fa-spa text-white text-5xl opacity-80"></i>
-            </div>
-            <div class="p-5">
-                <div class="flex justify-between items-start mb-3">
-                    <h3 class="font-semibold text-gray-800">Tapis de yoga</h3>
-                    <span class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-medium">Bon</span>
-                </div>
-                <p class="text-sm text-gray-500 mb-3">Type: Tapis yoga</p>
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <i class="fas fa-boxes text-gray-400"></i>
-                        <span class="text-sm text-gray-600">Qté: 15</span>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="openEquipModal('edit', 5)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button onclick="confirmDeleteEquip(5)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Card 6 -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
-            <div class="h-32 bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
-                <i class="fas fa-weight text-white text-5xl opacity-80"></i>
-            </div>
-            <div class="p-5">
-                <div class="flex justify-between items-start mb-3">
-                    <h3 class="font-semibold text-gray-800">Machine pectoraux</h3>
-                    <span class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-medium">Moyen</span>
-                </div>
-                <p class="text-sm text-gray-500 mb-3">Type: Machine</p>
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <i class="fas fa-boxes text-gray-400"></i>
-                        <span class="text-sm text-gray-600">Qté: 2</span>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="openEquipModal('edit', 6)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button onclick="confirmDeleteEquip(6)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- PHP: endforeach; -->
+<!--         Card 2 - Moyen état -->
+<!--        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">-->
+<!--            <div class="h-32 bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">-->
+<!--                <i class="fas fa-biking text-white text-5xl opacity-80"></i>-->
+<!--            </div>-->
+<!--            <div class="p-5">-->
+<!--                <div class="flex justify-between items-start mb-3">-->
+<!--                    <h3 class="font-semibold text-gray-800">Vélo elliptique</h3>-->
+<!--                    <span class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-medium">Moyen</span>-->
+<!--                </div>-->
+<!--                <p class="text-sm text-gray-500 mb-3">Type: Vélo</p>-->
+<!--                <div class="flex items-center justify-between">-->
+<!--                    <div class="flex items-center gap-2">-->
+<!--                        <i class="fas fa-boxes text-gray-400"></i>-->
+<!--                        <span class="text-sm text-gray-600">Qté: 6</span>-->
+<!--                    </div>-->
+<!--                    <div class="flex gap-2">-->
+<!--                        <button onclick="openEquipModal('edit', 2)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition">-->
+<!--                            <i class="fas fa-edit"></i>-->
+<!--                        </button>-->
+<!--                        <button onclick="confirmDeleteEquip(2)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition">-->
+<!--                            <i class="fas fa-trash"></i>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!---->
+<!--         Card 3 - À remplacer -->
+<!--        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">-->
+<!--            <div class="h-32 bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center">-->
+<!--                <i class="fas fa-dumbbell text-white text-5xl opacity-80"></i>-->
+<!--            </div>-->
+<!--            <div class="p-5">-->
+<!--                <div class="flex justify-between items-start mb-3">-->
+<!--                    <h3 class="font-semibold text-gray-800">Haltères 10kg</h3>-->
+<!--                    <span class="px-2 py-1 bg-red-100 text-red-700 rounded-full text-xs font-medium">À remplacer</span>-->
+<!--                </div>-->
+<!--                <p class="text-sm text-gray-500 mb-3">Type: Haltères</p>-->
+<!--                <div class="flex items-center justify-between">-->
+<!--                    <div class="flex items-center gap-2">-->
+<!--                        <i class="fas fa-boxes text-gray-400"></i>-->
+<!--                        <span class="text-sm text-gray-600">Qté: 4</span>-->
+<!--                    </div>-->
+<!--                    <div class="flex gap-2">-->
+<!--                        <button onclick="openEquipModal('edit', 3)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition">-->
+<!--                            <i class="fas fa-edit"></i>-->
+<!--                        </button>-->
+<!--                        <button onclick="confirmDeleteEquip(3)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition">-->
+<!--                            <i class="fas fa-trash"></i>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!---->
+<!--         Card 4 -->
+<!--        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">-->
+<!--            <div class="h-32 bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center">-->
+<!--                <i class="fas fa-futbol text-white text-5xl opacity-80"></i>-->
+<!--            </div>-->
+<!--            <div class="p-5">-->
+<!--                <div class="flex justify-between items-start mb-3">-->
+<!--                    <h3 class="font-semibold text-gray-800">Ballon fitness</h3>-->
+<!--                    <span class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-medium">Bon</span>-->
+<!--                </div>-->
+<!--                <p class="text-sm text-gray-500 mb-3">Type: Ballon</p>-->
+<!--                <div class="flex items-center justify-between">-->
+<!--                    <div class="flex items-center gap-2">-->
+<!--                        <i class="fas fa-boxes text-gray-400"></i>-->
+<!--                        <span class="text-sm text-gray-600">Qté: 10</span>-->
+<!--                    </div>-->
+<!--                    <div class="flex gap-2">-->
+<!--                        <button onclick="openEquipModal('edit', 4)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition">-->
+<!--                            <i class="fas fa-edit"></i>-->
+<!--                        </button>-->
+<!--                        <button onclick="confirmDeleteEquip(4)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition">-->
+<!--                            <i class="fas fa-trash"></i>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!---->
+<!--         Card 5 -->
+<!--        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">-->
+<!--            <div class="h-32 bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center">-->
+<!--                <i class="fas fa-spa text-white text-5xl opacity-80"></i>-->
+<!--            </div>-->
+<!--            <div class="p-5">-->
+<!--                <div class="flex justify-between items-start mb-3">-->
+<!--                    <h3 class="font-semibold text-gray-800">Tapis de yoga</h3>-->
+<!--                    <span class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-medium">Bon</span>-->
+<!--                </div>-->
+<!--                <p class="text-sm text-gray-500 mb-3">Type: Tapis yoga</p>-->
+<!--                <div class="flex items-center justify-between">-->
+<!--                    <div class="flex items-center gap-2">-->
+<!--                        <i class="fas fa-boxes text-gray-400"></i>-->
+<!--                        <span class="text-sm text-gray-600">Qté: 15</span>-->
+<!--                    </div>-->
+<!--                    <div class="flex gap-2">-->
+<!--                        <button onclick="openEquipModal('edit', 5)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition">-->
+<!--                            <i class="fas fa-edit"></i>-->
+<!--                        </button>-->
+<!--                        <button onclick="confirmDeleteEquip(5)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition">-->
+<!--                            <i class="fas fa-trash"></i>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!---->
+<!--         Card 6 -->
+<!--        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">-->
+<!--            <div class="h-32 bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">-->
+<!--                <i class="fas fa-weight text-white text-5xl opacity-80"></i>-->
+<!--            </div>-->
+<!--            <div class="p-5">-->
+<!--                <div class="flex justify-between items-start mb-3">-->
+<!--                    <h3 class="font-semibold text-gray-800">Machine pectoraux</h3>-->
+<!--                    <span class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-medium">Moyen</span>-->
+<!--                </div>-->
+<!--                <p class="text-sm text-gray-500 mb-3">Type: Machine</p>-->
+<!--                <div class="flex items-center justify-between">-->
+<!--                    <div class="flex items-center gap-2">-->
+<!--                        <i class="fas fa-boxes text-gray-400"></i>-->
+<!--                        <span class="text-sm text-gray-600">Qté: 2</span>-->
+<!--                    </div>-->
+<!--                    <div class="flex gap-2">-->
+<!--                        <button onclick="openEquipModal('edit', 6)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition">-->
+<!--                            <i class="fas fa-edit"></i>-->
+<!--                        </button>-->
+<!--                        <button onclick="confirmDeleteEquip(6)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition">-->
+<!--                            <i class="fas fa-trash"></i>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
     </div>
 </main>
 
@@ -380,8 +387,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                         class="px-6 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition">
                     Annuler
                 </button>
-                <!-- PHP: href="delete_equipement.php?id=<?php echo $id; ?>" -->
-                <a id="deleteEquipLink" href="#"
+                <a id="deleteEquipLink" href=""
                    class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
                     Supprimer
                 </a>

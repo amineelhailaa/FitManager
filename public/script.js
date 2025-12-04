@@ -42,7 +42,7 @@ function confirmDelete(id) {
     const link = document.getElementById("deleteLink")
 
     // PHP: Update this to your delete endpoint
-    link.href = "delete_cours.php?id=" + id
+    link.href = "delete2.php?id=" + id
 
     modal.classList.remove("hidden")
     modal.classList.add("flex")
@@ -89,7 +89,7 @@ function confirmDeleteEquip(id) {
     const link = document.getElementById("deleteEquipLink")
 
     // PHP: Update this to your delete endpoint
-    link.href = "delete_equipement.php?id=" + id
+    link.href = "delete.php?id=" + id
 
     modal.classList.remove("hidden")
     modal.classList.add("flex")

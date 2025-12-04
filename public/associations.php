@@ -132,7 +132,7 @@ else{
             </tr>
             </thead>
             <tbody id="assocTableBody">
-            <!-- PHP: foreach($associations as $a): -->
+
             <tr class="border-b border-gray-50 hover:bg-gray-50 transition">
                 <td class="px-6 py-4">
                     <div class="flex items-center gap-3">
