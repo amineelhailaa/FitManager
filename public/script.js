@@ -25,12 +25,12 @@ function openModal(mode, id = null) {
             .then(response=>response.json())
             .then(data=>{
                 console.log(data.duree)
-                document.getElementById("coursId").value = data.id_cours
+           //     document.getElementById("coursId").value = data.id_cours
                 document.getElementById("nomCours").value = data.nom_cours
                 document.getElementById("categorie").value = data.categorie
                 document.getElementById("dateCours").value = data.date_cours
                 document.getElementById("heure").value = data.heure
-                document.querySelector(".dure").value = data.duree
+                document.getElementById('dur').value = data.duree
                 document.getElementById("maxParticipants").value = data.max
             })
         title.textContent = "Modifier le cours"
