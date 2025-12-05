@@ -308,7 +308,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
                 <i class="fas fa-times text-xl"></i>
             </button>
-            form
+
         </div>
 
         <form id="coursForm" action="cours.php" method="POST" class="p-6 space-y-4">

@@ -1,7 +1,34 @@
 <?php
-include("connection/connect.php")
-?>
+global $connection;
+include("../connection/connect.php");
 
+
+function speedUp($cmd){
+    global $connection;
+    $new = mysqli_fetch_assoc(mysqli_query($connection,$cmd));
+    return $new['count(*)'];
+}
+
+
+$total_cours = speedUp("SELECT count(*) FROM cours");
+$total_equipements = speedUp("SELECT count(*) FROM equipements");
+$equipements_bon = speedUP("select count(*) from equipements where etat='Bon'");
+$equipements_remplacer = speedUP("select count(*) from equipements where etat='à remplacer'");
+$equipement_bon_pr = mysqli_fetch_assoc(mysqli_query($connection," select (select count(*) from equipements where etat='Bon')*100/(select count(*)  from equipements) as pr "));
+//$new = $equipements_bon['count(*)'];
+
+
+
+//$total_cours= $totalcc['COUNT(*)'];
+
+//$total_equipements = speedUp("SELECT COUNT(*) FROM equipements;");
+//$equipements_bon = speedUp("SELECT COUNT(*) FROM equipements where etat='bon';");
+//$equipements_remplacer = speedUp("select count(*) from equipements where etat='remplacer';")
+
+//mysqli_query($connection,)
+
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -73,8 +100,7 @@ include("connection/connect.php")
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-500 text-sm">Total Cours</p>
-                    <!-- PHP: <?php echo $total_cours; ?> -->
-                    <p class="text-3xl font-bold text-gray-800 mt-1">12</p>
+                    <p class="text-3xl font-bold text-gray-800 mt-1"><?php echo $total_cours; ?></p>
                 </div>
                 <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <i class="fas fa-calendar-alt text-blue-600 text-xl"></i>
@@ -90,8 +116,8 @@ include("connection/connect.php")
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-500 text-sm">Total Équipements</p>
-                    <!-- PHP: <?php echo $total_equipements; ?> -->
-                    <p class="text-3xl font-bold text-gray-800 mt-1">45</p>
+
+                    <p class="text-3xl font-bold text-gray-800 mt-1"><?php echo $total_equipements; ?> </p>
                 </div>
                 <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center">
                     <i class="fas fa-dumbbell text-emerald-600 text-xl"></i>
@@ -107,14 +133,14 @@ include("connection/connect.php")
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-500 text-sm">En bon état</p>
-                    <!-- PHP: <?php echo $equipements_bon; ?> -->
-                    <p class="text-3xl font-bold text-gray-800 mt-1">38</p>
+                    <p class="text-3xl font-bold text-gray-800 mt-1"> <?php echo $equipements_bon; ?>
+                    </p>
                 </div>
                 <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
                     <i class="fas fa-check-circle text-green-600 text-xl"></i>
                 </div>
             </div>
-            <p class="text-gray-500 text-sm mt-3">84% du total</p>
+            <p class="text-gray-500 text-sm mt-3"><?php echo intval($equipement_bon_pr['pr']) ?>%</p>
         </div>
 
         <!-- À remplacer -->
@@ -122,8 +148,8 @@ include("connection/connect.php")
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-500 text-sm">À remplacer</p>
-                    <!-- PHP: <?php echo $equipements_remplacer; ?> -->
-                    <p class="text-3xl font-bold text-gray-800 mt-1">3</p>
+                    <p class="text-3xl font-bold text-gray-800 mt-1"><?php echo $equipements_remplacer; ?>
+                    </p>
                 </div>
                 <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
                     <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
