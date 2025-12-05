@@ -14,15 +14,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $duree = $_POST['duree_cours'];
     $max = $_POST['max_cours'];
     if ($_POST['id_cours'] != "") {
-    $pushIt = ""
+        $id = $_POST['id_cours'];
+        $pushIt = "update cours set nom_cours= '$nom' , categorie='$categorie', date_cours='$date',heure='$heure',duree=$duree,`max`=$max WHERE id_cours=$id ";
     } else {
         $pushIt = "INSERT INTO cours (nom_cours, categorie, date_cours, heure, duree, `max`)
            VALUES ('$nom', '$categorie', '$date', '$heure', '$duree', '$max')";
+    }
 
-        if (mysqli_query($connection, $pushIt)) {
-            header('location:cours.php');
-            exit();
-        }
+    if (mysqli_query($connection, $pushIt)) {
+        header('location:cours.php');
+        exit();
+
     }
 
 }

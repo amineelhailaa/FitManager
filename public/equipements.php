@@ -7,7 +7,16 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     $qte = $_POST["qte"];
     $etat=$_POST["etat"];
 
-    $toPush = "INSERT INTO equipements (nom_equipement,type,qte,etat) values ('$name','$type','$qte','$etat') ";
+
+
+
+    if($_POST['id_equipement']==""){
+        $toPush = "INSERT INTO equipements (nom_equipement,type,qte,etat) values ('$name','$type','$qte','$etat') ";
+
+    }else{
+        $id=$_POST["id_equipement"];
+        $toPush = "update equipements set nom_equipement='$name',type='$type',qte=$qte,etat='$etat' where id_equipement=$id ";
+    }
 
     if(mysqli_query($connection, $toPush)){
         header('location:equipements.php');
@@ -125,7 +134,6 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
     <!-- Equipment Cards Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="equipementGrid">
-        <!-- PHP: foreach($equipements as $e): -->
         <?php
         $request = "SELECT * FROM equipements";
         $all = mysqli_query($connection,$request);
@@ -149,7 +157,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                         <span class="text-sm text-gray-600"><?php echo $row['qte'] ?></span>
                     </div>
                     <div class="flex gap-2">
-                        <button onclick="openEquipModal('edit', 1)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition">
+                        <button onclick="openEquipModal('edit', <?php echo $row['id_equipement'] ?>)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition">
                             <i class="fas fa-edit"></i>
                         </button>
                         <button onclick="confirmDeleteEquip(<?php echo $row['id_equipement'] ?>)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition">

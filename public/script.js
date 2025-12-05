@@ -83,6 +83,15 @@ function openEquipModal(mode, id = null) {
     } else if (mode === "edit") {
         title.textContent = "Modifier l'équipement"
         document.getElementById("equipId").value = id
+        fetch("fetch_eq2.php?id="+id)
+            .then(response=>response.json())
+            .then(data=>{
+                console.log(data)
+                document.getElementById("nomEquip").value=data.nom_equipement
+                document.getElementById("typeEquip").value=data.type
+                document.getElementById("qteEquip").value=data.qte
+                document.getElementById("etatEquip").value=data.etat;
+            })
         // PHP: Load equipment data via AJAX or pre-populate with PHP
         // Example: fetchEquipmentData(id);
     }
