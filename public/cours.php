@@ -148,21 +148,60 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <tbody id="coursTableBody">
             <!-- PHP: foreach($cours as $c): -->
             <?php
+
+            //for styling function
+             $classes = [
+                    'yoga'=>['fa-spa','text-blue-700 ','bg-blue-100'],
+                'cardio'=>['fa-heartbeat','text-red-600','bg-red-100'],
+                'pilates'=>['fa-child','text-purple-600','bg-purple-100'],
+                'crossFit'=>['fa-fire','text-emerald-600','bg-emerald-100'],
+                'musculation'=>['fa-dumbbell','text-orange-600','bg-orange-100'],
+            ];
+
+            function applyStyling($string){
+
+                global $classes;
+                if("Yoga"==$string){
+                   return $classes['yoga'];
+                }
+                elseif ("Cardio"==$string){
+                    return $classes['cardio'];
+                }
+                elseif ("Musculation"==$string){
+                     return $classes['musculation'];
+                }
+                elseif ("Pilates"==$string){
+                    return $classes['pilates'];
+                }
+                elseif ("CrossFit"==$string){
+                    return $classes['crossFit'];
+                }
+                return null;
+            }
+
+
+
             $request = "SELECT * from cours";
             $all = mysqli_query($connection, $request);
+
+
             while ($row = mysqli_fetch_assoc($all)) {
+                $a = applyStyling($row['categorie']);
                 ?>
                 <tr class="border-b border-gray-50 hover:bg-gray-50 transition">
                     <td class="px-6 py-4">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                                <i class="fas fa-spa text-blue-600"></i>
+                            <div class="w-10 h-10 <?php echo $a[2] ?> rounded-lg flex items-center justify-center">
+                                <i class="fas
+                                 <?php echo $a[0]." ".$a[1] ?>
+
+                                text-blue-600"></i>
                             </div>
                             <span class="font-medium text-gray-800"><?php echo $row['nom_cours'] ?></span>
                         </div>
                     </td>
                     <td class="px-6 py-4">
-                        <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm"><?php echo $row['categorie'] ?></span>
+                        <span class="px-3 py-1 <?php echo $a[1]." ".$a[2] ?> rounded-full text-sm"><?php echo $row['categorie'] ?></span>
                     </td>
                     <td class="px-6 py-4 text-gray-600"><?php echo $row['date_cours'] ?></td>
                     <td class="px-6 py-4 text-gray-600"><?php echo $row['heure'] ?></td>
@@ -182,118 +221,118 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </td>
                 </tr>
             <?php } ?>
-
-            <!--            <tr class="border-b border-gray-50 hover:bg-gray-50 transition">-->
-            <!--                <td class="px-6 py-4">-->
-            <!--                    <div class="flex items-center gap-3">-->
-            <!--                        <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">-->
-            <!--                            <i class="fas fa-heartbeat text-red-600"></i>-->
-            <!--                        </div>-->
-            <!--                        <span class="font-medium text-gray-800">Cardio Intense</span>-->
-            <!--                    </div>-->
-            <!--                </td>-->
-            <!--                <td class="px-6 py-4">-->
-            <!--                    <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm">Cardio</span>-->
-            <!--                </td>-->
-            <!--                <td class="px-6 py-4 text-gray-600">2025-06-15</td>-->
-            <!--                <td class="px-6 py-4 text-gray-600">10:00</td>-->
-            <!--                <td class="px-6 py-4 text-gray-600">45 min</td>-->
-            <!--                <td class="px-6 py-4 text-gray-600">15</td>-->
-            <!--                <td class="px-6 py-4">-->
-            <!--                    <div class="flex justify-center gap-2">-->
-            <!--                        <button onclick="openModal('edit', 2)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition" title="Modifier">-->
-            <!--                            <i class="fas fa-edit"></i>-->
-            <!--                        </button>-->
-            <!--                        <button onclick="confirmDelete(2)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Supprimer">-->
-            <!--                            <i class="fas fa-trash"></i>-->
-            <!--                        </button>-->
-            <!--                    </div>-->
-            <!--                </td>-->
-            <!--            </tr>-->
-            <!---->
-            <!--            <tr class="border-b border-gray-50 hover:bg-gray-50 transition">-->
-            <!--                <td class="px-6 py-4">-->
-            <!--                    <div class="flex items-center gap-3">-->
-            <!--                        <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">-->
-            <!--                            <i class="fas fa-dumbbell text-orange-600"></i>-->
-            <!--                        </div>-->
-            <!--                        <span class="font-medium text-gray-800">Musculation Débutant</span>-->
-            <!--                    </div>-->
-            <!--                </td>-->
-            <!--                <td class="px-6 py-4">-->
-            <!--                    <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm">Musculation</span>-->
-            <!--                </td>-->
-            <!--                <td class="px-6 py-4 text-gray-600">2025-06-16</td>-->
-            <!--                <td class="px-6 py-4 text-gray-600">14:00</td>-->
-            <!--                <td class="px-6 py-4 text-gray-600">90 min</td>-->
-            <!--                <td class="px-6 py-4 text-gray-600">10</td>-->
-            <!--                <td class="px-6 py-4">-->
-            <!--                    <div class="flex justify-center gap-2">-->
-            <!--                        <button onclick="openModal('edit', 3)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition" title="Modifier">-->
-            <!--                            <i class="fas fa-edit"></i>-->
-            <!--                        </button>-->
-            <!--                        <button onclick="confirmDelete(3)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Supprimer">-->
-            <!--                            <i class="fas fa-trash"></i>-->
-            <!--                        </button>-->
-            <!--                    </div>-->
-            <!--                </td>-->
-            <!--            </tr>-->
-            <!---->
-            <!--            <tr class="border-b border-gray-50 hover:bg-gray-50 transition">-->
-            <!--                <td class="px-6 py-4">-->
-            <!--                    <div class="flex items-center gap-3">-->
-            <!--                        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">-->
-            <!--                            <i class="fas fa-child text-purple-600"></i>-->
-            <!--                        </div>-->
-            <!--                        <span class="font-medium text-gray-800">Pilates Relaxation</span>-->
-            <!--                    </div>-->
-            <!--                </td>-->
-            <!--                <td class="px-6 py-4">-->
-            <!--                    <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">Pilates</span>-->
-            <!--                </td>-->
-            <!--                <td class="px-6 py-4 text-gray-600">2025-06-17</td>-->
-            <!--                <td class="px-6 py-4 text-gray-600">09:00</td>-->
-            <!--                <td class="px-6 py-4 text-gray-600">60 min</td>-->
-            <!--                <td class="px-6 py-4 text-gray-600">12</td>-->
-            <!--                <td class="px-6 py-4">-->
-            <!--                    <div class="flex justify-center gap-2">-->
-            <!--                        <button onclick="openModal('edit', 4)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition" title="Modifier">-->
-            <!--                            <i class="fas fa-edit"></i>-->
-            <!--                        </button>-->
-            <!--                        <button onclick="confirmDelete(4)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Supprimer">-->
-            <!--                            <i class="fas fa-trash"></i>-->
-            <!--                        </button>-->
-            <!--                    </div>-->
-            <!--                </td>-->
-            <!--            </tr>-->
-            <!---->
-            <!--            <tr class="border-b border-gray-50 hover:bg-gray-50 transition">-->
-            <!--                <td class="px-6 py-4">-->
-            <!--                    <div class="flex items-center gap-3">-->
-            <!--                        <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">-->
-            <!--                            <i class="fas fa-fire text-emerald-600"></i>-->
-            <!--                        </div>-->
-            <!--                        <span class="font-medium text-gray-800">CrossFit Challenge</span>-->
-            <!--                    </div>-->
-            <!--                </td>-->
-            <!--                <td class="px-6 py-4">-->
-            <!--                    <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm">CrossFit</span>-->
-            <!--                </td>-->
-            <!--                <td class="px-6 py-4 text-gray-600">2025-06-18</td>-->
-            <!--                <td class="px-6 py-4 text-gray-600">17:00</td>-->
-            <!--                <td class="px-6 py-4 text-gray-600">75 min</td>-->
-            <!--                <td class="px-6 py-4 text-gray-600">8</td>-->
-            <!--                <td class="px-6 py-4">-->
-            <!--                    <div class="flex justify-center gap-2">-->
-            <!--                        <button onclick="openModal('edit', 5)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition" title="Modifier">-->
-            <!--                            <i class="fas fa-edit"></i>-->
-            <!--                        </button>-->
-            <!--                        <button onclick="confirmDelete(5)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Supprimer">-->
-            <!--                            <i class="fas fa-trash"></i>-->
-            <!--                        </button>-->
-            <!--                    </div>-->
-            <!--                </td>-->
-            <!--            </tr>-->
+<!---->
+<!--                        <tr class="border-b border-gray-50 hover:bg-gray-50 transition">-->
+<!--                            <td class="px-6 py-4">-->
+<!--                                <div class="flex items-center gap-3">-->
+<!--                                    <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">-->
+<!--                                        <i class="fas fa-heartbeat text-red-600"></i>-->
+<!--                                    </div>-->
+<!--                                    <span class="font-medium text-gray-800">Cardio Intense</span>-->
+<!--                                </div>-->
+<!--                            </td>-->
+<!--                            <td class="px-6 py-4">-->
+<!--                                <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm">Cardio</span>-->
+<!--                            </td>-->
+<!--                            <td class="px-6 py-4 text-gray-600">2025-06-15</td>-->
+<!--                            <td class="px-6 py-4 text-gray-600">10:00</td>-->
+<!--                            <td class="px-6 py-4 text-gray-600">45 min</td>-->
+<!--                            <td class="px-6 py-4 text-gray-600">15</td>-->
+<!--                            <td class="px-6 py-4">-->
+<!--                                <div class="flex justify-center gap-2">-->
+<!--                                    <button onclick="openModal('edit', 2)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition" title="Modifier">-->
+<!--                                        <i class="fas fa-edit"></i>-->
+<!--                                    </button>-->
+<!--                                    <button onclick="confirmDelete(2)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Supprimer">-->
+<!--                                        <i class="fas fa-trash"></i>-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!---->
+<!--                        <tr class="border-b border-gray-50 hover:bg-gray-50 transition">-->
+<!--                            <td class="px-6 py-4">-->
+<!--                                <div class="flex items-center gap-3">-->
+<!--                                    <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">-->
+<!--                                        <i class="fas fa-dumbbell text-orange-600"></i>-->
+<!--                                    </div>-->
+    <!--                                    <span class="font-medium text-gray-800">Musculation Débutant</span>-->
+<!--                                </div>-->
+<!--                            </td>-->
+<!--                            <td class="px-6 py-4">-->
+<!--                                <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm">Musculation</span>-->
+<!--                            </td>-->
+<!--                            <td class="px-6 py-4 text-gray-600">2025-06-16</td>-->
+<!--                            <td class="px-6 py-4 text-gray-600">14:00</td>-->
+<!--                            <td class="px-6 py-4 text-gray-600">90 min</td>-->
+<!--                            <td class="px-6 py-4 text-gray-600">10</td>-->
+<!--                            <td class="px-6 py-4">-->
+<!--                                <div class="flex justify-center gap-2">-->
+<!--                                    <button onclick="openModal('edit', 3)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition" title="Modifier">-->
+<!--                                        <i class="fas fa-edit"></i>-->
+<!--                                    </button>-->
+<!--                                    <button onclick="confirmDelete(3)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Supprimer">-->
+<!--                                        <i class="fas fa-trash"></i>-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!---->
+<!--                        <tr class="border-b border-gray-50 hover:bg-gray-50 transition">-->
+<!--                            <td class="px-6 py-4">-->
+<!--                                <div class="flex items-center gap-3">-->
+<!--                                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">-->
+<!--                                        <i class="fas fa-child text-purple-600"></i>-->
+<!--                                    </div>-->
+<!--                                    <span class="font-medium text-gray-800">Pilates Relaxation</span>-->
+<!--                                </div>-->
+<!--                            </td>-->
+<!--                            <td class="px-6 py-4">-->
+<!--                                <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">Pilates</span>-->
+<!--                            </td>-->
+<!--                            <td class="px-6 py-4 text-gray-600">2025-06-17</td>-->
+<!--                            <td class="px-6 py-4 text-gray-600">09:00</td>-->
+<!--                            <td class="px-6 py-4 text-gray-600">60 min</td>-->
+<!--                            <td class="px-6 py-4 text-gray-600">12</td>-->
+<!--                            <td class="px-6 py-4">-->
+<!--                                <div class="flex justify-center gap-2">-->
+<!--                                    <button onclick="openModal('edit', 4)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition" title="Modifier">-->
+<!--                                        <i class="fas fa-edit"></i>-->
+<!--                                    </button>-->
+<!--                                    <button onclick="confirmDelete(4)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Supprimer">-->
+<!--                                        <i class="fas fa-trash"></i>-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!---->
+<!--                        <tr class="border-b border-gray-50 hover:bg-gray-50 transition">-->
+<!--                            <td class="px-6 py-4">-->
+<!--                                <div class="flex items-center gap-3">-->
+<!--                                    <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">-->
+<!--                                        <i class="fas fa-fire text-emerald-600"></i>-->
+<!--                                    </div>-->
+<!--                                    <span class="font-medium text-gray-800">CrossFit Challenge</span>-->
+<!--                                </div>-->
+<!--                            </td>-->
+<!--                            <td class="px-6 py-4">-->
+<!--                                <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm">CrossFit</span>-->
+<!--                            </td>-->
+<!--                            <td class="px-6 py-4 text-gray-600">2025-06-18</td>-->
+<!--                            <td class="px-6 py-4 text-gray-600">17:00</td>-->
+<!--                            <td class="px-6 py-4 text-gray-600">75 min</td>-->
+<!--                            <td class="px-6 py-4 text-gray-600">8</td>-->
+<!--                            <td class="px-6 py-4">-->
+<!--                                <div class="flex justify-center gap-2">-->
+<!--                                    <button onclick="openModal('edit', 5)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition" title="Modifier">-->
+<!--                                        <i class="fas fa-edit"></i>-->
+<!--                                    </button>-->
+<!--                                    <button onclick="confirmDelete(5)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Supprimer">-->
+<!--                                        <i class="fas fa-trash"></i>-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                            </td>-->
+<!--                        </tr>-->
             <!-- PHP: endforeach; -->
             </tbody>
         </table>

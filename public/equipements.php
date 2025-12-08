@@ -137,18 +137,37 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         <?php
         $request = "SELECT * FROM equipements";
         $all = mysqli_query($connection,$request);
+
+        $classes = [
+                'Tapis de course'=>['fa-running','from-emerald-400 to-emerald-600'],
+            'Vélo'=>['fa-biking','from-yellow-400 to-yellow-600'],
+            'Haltères'=>['fa-dumbbell','from-red-400 to-red-600'],
+            'Ballon'=>['fa-futbol','from-emerald-400 to-emerald-600'],
+            'Tapis yoga'=>[' fa-spa','from-green-400 to-green-600'],
+            'Machine'=>['fa-weight','from-yellow-400 to-yellow-600'],
+        ];
+
+        $etats = [
+                'bon'=>'bg-emerald-100 text-emerald-700',
+            'moyen'=>'bg-yellow-100 text-yellow-700',
+            'à remplacer'=>'bg-red-100 text-red-700',
+        ];
+
+
+
+
         while($row = mysqli_fetch_assoc($all)){
 
 
         ?>
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
-            <div class="h-32 bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center">
-                <i class="fas fa-running text-white text-5xl opacity-80"></i>
+            <div class="h-32 bg-gradient-to-br <?php echo $classes[$row['type']][1] ?> flex items-center justify-center">
+                <i class="fas <?php echo $classes[$row['type']][0] ?> text-white text-5xl opacity-80"></i>
             </div>
             <div class="p-5">
                 <div class="flex justify-between items-start mb-3">
                     <h3 class="font-semibold text-gray-800"><?php echo $row['nom_equipement'] ?></h3>
-                    <span class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-medium"><?php echo $row['etat'] ?></span>
+                    <span class="px-2 py-1 <?php echo $etats[$row['etat']] ?> rounded-full text-xs font-medium"><?php echo $row['etat'] ?></span>
                 </div>
                 <p class="text-sm text-gray-500 mb-3"><?php echo $row['type'] ?></p>
                 <div class="flex items-center justify-between">
