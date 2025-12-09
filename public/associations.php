@@ -3,8 +3,8 @@
 global $connection;
 include ('../connection/connect.php');
 if($_SERVER["REQUEST_METHOD"]=="POST"){
-$cours = intval($_POST['id_cours']);
-$equipement = intval($_POST['id_equipement']);
+$cours = $_POST['id_cours'];
+$equipement = $_POST['id_equipement'];
 $insert = "insert into cours_equipement (id_cours,id_equipement) values ('$cours','$equipement')";
 if(mysqli_query($connection, $insert)){
     header('location:associations.php');
@@ -132,136 +132,140 @@ else{
             </tr>
             </thead>
             <tbody id="assocTableBody">
-
+            <?php
+            $query_show = "select * from cours_equipement left join cours on cours_equipement.id_cours=cours.id_cours left join equipements on cours_equipement.id_equipement=equipements.id_equipement";
+            $queryS = mysqli_query($connection,$query_show);
+            while ( $eachRow = mysqli_fetch_assoc($queryS)){
+            ?>
             <tr class="border-b border-gray-50 hover:bg-gray-50 transition">
                 <td class="px-6 py-4">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
                             <i class="fas fa-spa text-blue-600"></i>
                         </div>
-                        <span class="font-medium text-gray-800">Yoga Matinal</span>
+                        <span class="font-medium text-gray-800"><?php echo $eachRow['nom_cours'] ?></span>
                     </div>
                 </td>
                 <td class="px-6 py-4">
-                    <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">Yoga</span>
+                    <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm"><?php echo $eachRow['categorie'] ?></span>
                 </td>
-                <td class="px-6 py-4 font-medium text-gray-800">Tapis de yoga</td>
-                <td class="px-6 py-4 text-gray-600">Tapis yoga</td>
+                <td class="px-6 py-4 font-medium text-gray-800"><?php echo  $eachRow['nom_equipement'] ?></td>
+                <td class="px-6 py-4 text-gray-600"><?php echo $eachRow['type'] ?></td>
                 <td class="px-6 py-4">
-                    <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm">Bon</span>
+                    <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm"><?php echo  $eachRow['etat'] ?></span>
                 </td>
                 <td class="px-6 py-4">
                     <div class="flex justify-center">
-                        <button onclick="confirmDeleteAssoc(1, 5)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Délier">
+                        <button onclick="confirmDeleteAssoc(<?php echo $eachRow['id_cours'].",".$eachRow['id_equipement'] ?>)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Délier">
                             <i class="fas fa-unlink"></i>
                         </button>
                     </div>
                 </td>
             </tr>
-
-            <tr class="border-b border-gray-50 hover:bg-gray-50 transition">
-                <td class="px-6 py-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-heartbeat text-red-600"></i>
-                        </div>
-                        <span class="font-medium text-gray-800">Cardio Intense</span>
-                    </div>
-                </td>
-                <td class="px-6 py-4">
-                    <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm">Cardio</span>
-                </td>
-                <td class="px-6 py-4 font-medium text-gray-800">Tapis de course Pro</td>
-                <td class="px-6 py-4 text-gray-600">Tapis de course</td>
-                <td class="px-6 py-4">
-                    <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm">Bon</span>
-                </td>
-                <td class="px-6 py-4">
-                    <div class="flex justify-center">
-                        <button onclick="confirmDeleteAssoc(2, 1)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Délier">
-                            <i class="fas fa-unlink"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-
-            <tr class="border-b border-gray-50 hover:bg-gray-50 transition">
-                <td class="px-6 py-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-heartbeat text-red-600"></i>
-                        </div>
-                        <span class="font-medium text-gray-800">Cardio Intense</span>
-                    </div>
-                </td>
-                <td class="px-6 py-4">
-                    <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm">Cardio</span>
-                </td>
-                <td class="px-6 py-4 font-medium text-gray-800">Vélo elliptique</td>
-                <td class="px-6 py-4 text-gray-600">Vélo</td>
-                <td class="px-6 py-4">
-                    <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm">Moyen</span>
-                </td>
-                <td class="px-6 py-4">
-                    <div class="flex justify-center">
-                        <button onclick="confirmDeleteAssoc(2, 2)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Délier">
-                            <i class="fas fa-unlink"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-
-            <tr class="border-b border-gray-50 hover:bg-gray-50 transition">
-                <td class="px-6 py-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-dumbbell text-orange-600"></i>
-                        </div>
-                        <span class="font-medium text-gray-800">Musculation Débutant</span>
-                    </div>
-                </td>
-                <td class="px-6 py-4">
-                    <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm">Musculation</span>
-                </td>
-                <td class="px-6 py-4 font-medium text-gray-800">Haltères 10kg</td>
-                <td class="px-6 py-4 text-gray-600">Haltères</td>
-                <td class="px-6 py-4">
-                    <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm">À remplacer</span>
-                </td>
-                <td class="px-6 py-4">
-                    <div class="flex justify-center">
-                        <button onclick="confirmDeleteAssoc(3, 3)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Délier">
-                            <i class="fas fa-unlink"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-
-            <tr class="border-b border-gray-50 hover:bg-gray-50 transition">
-                <td class="px-6 py-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-child text-purple-600"></i>
-                        </div>
-                        <span class="font-medium text-gray-800">Pilates Relaxation</span>
-                    </div>
-                </td>
-                <td class="px-6 py-4">
-                    <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">Pilates</span>
-                </td>
-                <td class="px-6 py-4 font-medium text-gray-800">Ballon fitness</td>
-                <td class="px-6 py-4 text-gray-600">Ballon</td>
-                <td class="px-6 py-4">
-                    <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm">Bon</span>
-                </td>
-                <td class="px-6 py-4">
-                    <div class="flex justify-center">
-                        <button onclick="confirmDeleteAssoc(4, 4)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Délier">
-                            <i class="fas fa-unlink"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
+            <?php } ?>
+<!--            <tr class="border-b border-gray-50 hover:bg-gray-50 transition">-->
+<!--                <td class="px-6 py-4">-->
+<!--                    <div class="flex items-center gap-3">-->
+<!--                        <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">-->
+<!--                            <i class="fas fa-heartbeat text-red-600"></i>-->
+<!--                        </div>-->
+<!--                        <span class="font-medium text-gray-800">Cardio Intense</span>-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--                <td class="px-6 py-4">-->
+<!--                    <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm">Cardio</span>-->
+<!--                </td>-->
+<!--                <td class="px-6 py-4 font-medium text-gray-800">Tapis de course Pro</td>-->
+<!--                <td class="px-6 py-4 text-gray-600">Tapis de course</td>-->
+<!--                <td class="px-6 py-4">-->
+<!--                    <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm">Bon</span>-->
+<!--                </td>-->
+<!--                <td class="px-6 py-4">-->
+<!--                    <div class="flex justify-center">-->
+<!--                        <button onclick="confirmDeleteAssoc(2, 1)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Délier">-->
+<!--                            <i class="fas fa-unlink"></i>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!---->
+<!--            <tr class="border-b border-gray-50 hover:bg-gray-50 transition">-->
+<!--                <td class="px-6 py-4">-->
+<!--                    <div class="flex items-center gap-3">-->
+<!--                        <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">-->
+<!--                            <i class="fas fa-heartbeat text-red-600"></i>-->
+<!--                        </div>-->
+<!--                        <span class="font-medium text-gray-800">Cardio Intense</span>-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--                <td class="px-6 py-4">-->
+<!--                    <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm">Cardio</span>-->
+<!--                </td>-->
+<!--                <td class="px-6 py-4 font-medium text-gray-800">Vélo elliptique</td>-->
+<!--                <td class="px-6 py-4 text-gray-600">Vélo</td>-->
+<!--                <td class="px-6 py-4">-->
+<!--                    <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm">Moyen</span>-->
+<!--                </td>-->
+<!--                <td class="px-6 py-4">-->
+<!--                    <div class="flex justify-center">-->
+<!--                        <button onclick="confirmDeleteAssoc(2, 2)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Délier">-->
+<!--                            <i class="fas fa-unlink"></i>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!---->
+<!--            <tr class="border-b border-gray-50 hover:bg-gray-50 transition">-->
+<!--                <td class="px-6 py-4">-->
+<!--                    <div class="flex items-center gap-3">-->
+<!--                        <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">-->
+<!--                            <i class="fas fa-dumbbell text-orange-600"></i>-->
+<!--                        </div>-->
+<!--                        <span class="font-medium text-gray-800">Musculation Débutant</span>-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--                <td class="px-6 py-4">-->
+<!--                    <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm">Musculation</span>-->
+<!--                </td>-->
+<!--                <td class="px-6 py-4 font-medium text-gray-800">Haltères 10kg</td>-->
+<!--                <td class="px-6 py-4 text-gray-600">Haltères</td>-->
+<!--                <td class="px-6 py-4">-->
+<!--                    <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm">À remplacer</span>-->
+<!--                </td>-->
+<!--                <td class="px-6 py-4">-->
+<!--                    <div class="flex justify-center">-->
+<!--                        <button onclick="confirmDeleteAssoc(3, 3)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Délier">-->
+<!--                            <i class="fas fa-unlink"></i>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!---->
+<!--            <tr class="border-b border-gray-50 hover:bg-gray-50 transition">-->
+<!--                <td class="px-6 py-4">-->
+<!--                    <div class="flex items-center gap-3">-->
+<!--                        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">-->
+<!--                            <i class="fas fa-child text-purple-600"></i>-->
+<!--                        </div>-->
+<!--                        <span class="font-medium text-gray-800">Pilates Relaxation</span>-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--                <td class="px-6 py-4">-->
+<!--                    <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">Pilates</span>-->
+<!--                </td>-->
+<!--                <td class="px-6 py-4 font-medium text-gray-800">Ballon fitness</td>-->
+<!--                <td class="px-6 py-4 text-gray-600">Ballon</td>-->
+<!--                <td class="px-6 py-4">-->
+<!--                    <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm">Bon</span>-->
+<!--                </td>-->
+<!--                <td class="px-6 py-4">-->
+<!--                    <div class="flex justify-center">-->
+<!--                        <button onclick="confirmDeleteAssoc(4, 4)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Délier">-->
+<!--                            <i class="fas fa-unlink"></i>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--            </tr>-->
             <!-- PHP: endforeach; -->
             </tbody>
         </table>
@@ -278,20 +282,24 @@ else{
             </button>
         </div>
 
-        <!-- PHP: action="save_association.php" method="POST" -->
         <form id="assocForm" class="p-6 space-y-4" method="post" >
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Cours *</label>
                 <select id="assocCours" name="id_cours" required
                         class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
                     <option value="">Sélectionner un cours</option>
-                    <!-- PHP: foreach($cours as $c): -->
-                    <option value="1">Yoga Matinal</option>
-                    <option value="2">Cardio Intense</option>
-                    <option value="3">Musculation Débutant</option>
-                    <option value="4">Pilates Relaxation</option>
-                    <option value="5">CrossFit Challenge</option>
-                    <!-- PHP: endforeach; -->
+                    <?php
+                    $query = "SELECT * FROM cours";
+                    $result = mysqli_query($connection,$query);
+                    while( $row1 = mysqli_fetch_assoc($result)){
+                        echo "<option value=".$row1['id_cours'].">".$row1['nom_cours']."</option>";
+                    }
+                    ?>
+<!--                    <option value=13 >Yoga Matinal</option>-->
+<!--                    <option value=14>Cardio Intense</option>-->
+<!--                    <option value="3">Musculation Débutant</option>-->
+<!--                    <option value="4">Pilates Relaxation</option>-->
+<!--                    <option value="5">CrossFit Challenge</option>-->
                 </select>
             </div>
 
@@ -300,13 +308,19 @@ else{
                 <select id="assocEquip" name="id_equipement" required
                         class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
                     <option value="">Sélectionner un équipement</option>
-                    <!-- PHP: foreach($equipements as $e): -->
-                    <option value="1">Tapis de course Pro</option>
-                    <option value="2">Vélo elliptique</option>
-                    <option value="3">Haltères 10kg</option>
-                    <option value="4">Ballon fitness</option>
-                    <option value="5">Tapis de yoga</option>
-                    <option value="6">Machine pectoraux</option>
+<?php
+$query2 = "select * from equipements";
+$sec = mysqli_query($connection,$query2);
+while($row2 = mysqli_fetch_assoc($sec)){
+    echo "<option value=".$row2['id_equipement'].">".$row2['nom_equipement']."</option>";
+}
+?>
+<!--                    <option value=13 >Tapis de course Pro</option>-->
+<!--                    <option value=14>Vélo elliptique</option>-->
+<!--                    <option value="3">Haltères 10kg</option>-->
+<!--                    <option value="4">Ballon fitness</option>-->
+<!--                    <option value="5">Tapis de yoga</option>-->
+<!--                    <option value="6">Machine pectoraux</option>-->
                     <!-- PHP: endforeach; -->
                 </select>
             </div>

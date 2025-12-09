@@ -54,7 +54,6 @@ function confirmDelete(id) {
     const modal = document.getElementById("deleteModal")
     const link = document.getElementById("deleteLink")
 
-    // PHP: Update this to your delete endpoint
     link.href = "delete2.php?id=" + id
 
     modal.classList.remove("hidden")
@@ -92,8 +91,7 @@ function openEquipModal(mode, id = null) {
                 document.getElementById("qteEquip").value=data.qte
                 document.getElementById("etatEquip").value=data.etat;
             })
-        // PHP: Load equipment data via AJAX or pre-populate with PHP
-        // Example: fetchEquipmentData(id);
+
     }
 
     modal.classList.remove("hidden")
@@ -146,9 +144,7 @@ function confirmDeleteAssoc(idCours, idEquip) {
     const modal = document.getElementById("deleteAssocModal")
     const link = document.getElementById("deleteAssocLink")
 
-    // PHP: Update this to your delete endpoint
-    link.href = "delete_association.php?id_cours=" + idCours + "&id_equipement=" + idEquip
-
+    link.href = "delete3.php?id_cours=" + idCours + "&id_equipement=" + idEquip
     modal.classList.remove("hidden")
     modal.classList.add("flex")
 }
@@ -430,35 +426,3 @@ function toggleSidebar() {
     const sidebar = document.querySelector("aside")
     sidebar.classList.toggle("open")
 }
-
-// =============================================
-// PHP INTEGRATION NOTES
-// =============================================
-/*
-To integrate with PHP:
-
-1. FORMS:
-   - Add action="your_php_file.php" and method="POST" to forms
-   - Remove e.preventDefault() from form submit handlers
-   - Uncomment this.submit() lines
-
-2. DATA LOADING:
-   - Replace static HTML with PHP loops: <?php foreach($data as $item): ?>
-   - Use <?php echo $variable; ?> for dynamic values
-
-3. DELETE LINKS:
-   - Update href in confirmDelete functions to point to your PHP endpoints
-   - Example: delete_cours.php?id=<?php echo $id; ?>
-
-4. FILTERS:
-   - For server-side filtering, change select onchange to submit a form
-   - Or use AJAX to fetch filtered results
-
-5. SESSION MESSAGES:
-   - Add PHP session flash messages for success/error notifications
-   - Example: <?php if(isset($_SESSION['message'])): ?>
-
-6. AUTHENTICATION:
-   - Add session_start() at the top of each PHP file
-   - Check if user is logged in: if(!isset($_SESSION['user'])) { header('Location: login.php'); }
-*/
