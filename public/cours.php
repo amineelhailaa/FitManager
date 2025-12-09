@@ -110,16 +110,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <!-- Category Filter -->
-            <div>
-                <select id="categoryFilter"
+            <div ><form method="get">
+                <select id="categoryFilter" name="filter"
                         class="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                    <option value="">Toutes les catégories</option>
+                    <option value="*">Toutes les catégories</option>
                     <option value="Yoga">Yoga</option>
                     <option value="Cardio">Cardio</option>
                     <option value="Musculation">Musculation</option>
                     <option value="Pilates">Pilates</option>
                     <option value="CrossFit">CrossFit</option>
-                </select>
+                </select></form>
             </div>
 
             <!-- Export Button -->
@@ -180,8 +180,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
 
-
-            $request = "SELECT * from cours";
+$filter =    $_GET['category']!="" ? $_GET['category'] : "*";
+            $request = "SELECT $filter from cours";
             $all = mysqli_query($connection, $request);
 
 

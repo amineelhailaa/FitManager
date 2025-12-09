@@ -177,21 +177,21 @@ if (searchInput) {
 const categoryFilter = document.getElementById("categoryFilter")
 if (categoryFilter) {
     categoryFilter.addEventListener("change", function () {
-        const category = this.value
-        const rows = document.querySelectorAll("#coursTableBody tr")
-
-        rows.forEach((row) => {
-            if (!category) {
-                row.style.display = ""
-            } else {
-                const rowCategory = row.querySelector("td:nth-child(2) span")
-                if (rowCategory && rowCategory.textContent === category) {
-                    row.style.display = ""
-                } else {
-                    row.style.display = "none"
-                }
-            }
-        })
+        // const category = this.value
+        // const rows = document.querySelectorAll("#coursTableBody tr")
+        location.href = "cours.php?filter="+categoryFilter.value
+        // rows.forEach((row) => {
+        //     if (!category) {
+        //         row.style.display = ""
+        //     } else {
+        //         const rowCategory = row.querySelector("td:nth-child(2) span")
+        //         if (rowCategory && rowCategory.textContent === category) {
+        //             row.style.display = ""
+        //         } else {
+        //             row.style.display = "none"
+        //         }
+        //     }
+        // })
     })
 }
 
