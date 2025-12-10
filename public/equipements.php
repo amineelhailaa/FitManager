@@ -1,5 +1,7 @@
 <?php
 global $connection;
+ $filter1=$_GET['filter1']? $_GET['filter1'] : "";
+ $filter2=$_GET['filter2']? $_GET['filter2'] : "";
 include("../connection/connect.php");
 if($_SERVER["REQUEST_METHOD"]=="POST"){
     $name=$_POST["nom_equipement"];
@@ -102,8 +104,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             </div>
 
             <!-- Type Filter -->
-            <div>
-                <select id="typeFilter" class="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <div><form method="get">
+                <select name="filter1" id="typeFilter" class="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
                     <option value="">Tous les types</option>
                     <option value="Tapis de course">Tapis de course</option>
                     <option value="Vélo">Vélo</option>
@@ -112,16 +114,19 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                     <option value="Tapis yoga">Tapis yoga</option>
                     <option value="Machine">Machine</option>
                 </select>
+                </form>
             </div>
 
             <!-- State Filter -->
             <div>
-                <select id="etatFilter" class="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <form  method="get">
+                <select name="filter2" id="etatFilter" class="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
                     <option value="">Tous les états</option>
                     <option value="bon">Bon</option>
                     <option value="moyen">Moyen</option>
                     <option value="à remplacer">À remplacer</option>
                 </select>
+                </form>
             </div>
 
             <!-- Export Button -->
@@ -135,7 +140,17 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     <!-- Equipment Cards Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="equipementGrid">
         <?php
-        $request = "SELECT * FROM equipements";
+
+        $con1="";
+        $con2="";
+        if($filter1!=""){
+            $con1 = "and type='$filter1'";
+        }
+        if($filter2!=""){
+            $con2 = "and etat='$filter2'";
+        }
+            $request = "SELECT * FROM equipements where 1=1".$con1.$con2.";";
+
         $all = mysqli_query($connection,$request);
 
         $classes = [
