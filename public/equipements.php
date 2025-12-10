@@ -1,7 +1,7 @@
 <?php
 global $connection;
- $filter1=$_GET['filter1']? $_GET['filter1'] : "";
- $filter2=$_GET['filter2']? $_GET['filter2'] : "";
+ $filter1=$_GET['filter1'] ?? "";
+ $filter2=$_GET['filter2'] ?? "";
 include("../connection/connect.php");
 if($_SERVER["REQUEST_METHOD"]=="POST"){
     $name=$_POST["nom_equipement"];
@@ -104,30 +104,29 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             </div>
 
             <!-- Type Filter -->
-            <div><form method="get">
+            <form id="filterForm" method="get" class="flex flex-wrap gap-4 items-center">
+            <div>
                 <select name="filter1" id="typeFilter" class="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                    <option value="">Tous les types</option>
-                    <option value="Tapis de course">Tapis de course</option>
-                    <option value="Vélo">Vélo</option>
-                    <option value="Haltères">Haltères</option>
-                    <option value="Ballon">Ballon</option>
-                    <option value="Tapis yoga">Tapis yoga</option>
-                    <option value="Machine">Machine</option>
+                    <option value=""<?php if ($filter1=="") ?>>Tous les types</option>
+                    <option value="Tapis de course"<?php if($filter1=="Tapis de course") {echo "selected";}?> >Tapis de course</option>
+                    <option value="Vélo" <?php if ($filter1=="Vélo") echo "selected";?>>Vélo</option>
+                    <option value="Haltères" <?php if ($filter1=="Haltères") echo "selected";?>>Haltères</option>
+                    <option value="Ballon" <?php if ($filter1=="Ballon") echo "selected";?>>Ballon</option>
+                    <option value="Tapis yoga" <?php if ($filter1=="Tapis yoga") echo "selected";?>>Tapis yoga</option>
+                    <option value="Machine" <?php if ($filter1=="Machine") echo "selected";?>>Machine</option>
                 </select>
-                </form>
             </div>
 
             <!-- State Filter -->
             <div>
-                <form  method="get">
                 <select name="filter2" id="etatFilter" class="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                    <option value="">Tous les états</option>
-                    <option value="bon">Bon</option>
-                    <option value="moyen">Moyen</option>
-                    <option value="à remplacer">À remplacer</option>
+                    <option <?php if($filter2 =="") echo "selected"; ?> value="">Tous les états</option>
+                    <option <?php if($filter2 =="bon") echo "selected"; ?> value="bon">Bon</option>
+                    <option <?php if($filter2 =="moyen") echo "selected"; ?> value="moyen">Moyen</option>
+                    <option <?php if($filter2 =="à remplacer") echo "selected"; ?> value="à remplacer">À remplacer</option>
                 </select>
-                </form>
             </div>
+            </form>
 
             <!-- Export Button -->
             <a href="export.php?type=equipements" class="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition">
@@ -149,7 +148,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         if($filter2!=""){
             $con2 = "and etat='$filter2'";
         }
-            $request = "SELECT * FROM equipements where 1=1".$con1.$con2.";";
+            $request = "SELECT * FROM equipements where 1=1 ".$con1." ".$con2.";";
 
         $all = mysqli_query($connection,$request);
 

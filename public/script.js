@@ -108,7 +108,6 @@ function confirmDeleteEquip(id) {
     const modal = document.getElementById("deleteEquipModal")
     const link = document.getElementById("deleteEquipLink")
 
-    // PHP: Update this to your delete endpoint
     link.href = "delete.php?id=" + id
 
     modal.classList.remove("hidden")
@@ -160,96 +159,60 @@ function closeDeleteAssocModal() {
 // =============================================
 
 // Search courses
-const searchInput = document.getElementById("searchInput")
-if (searchInput) {
-    searchInput.addEventListener("input", function () {
-        const searchTerm = this.value.toLowerCase()
-        const rows = document.querySelectorAll("#coursTableBody tr")
+// const searchInput = document.getElementById("searchInput")
+// if (searchInput) {
+//     searchInput.addEventListener("input", function () {
+//         const searchTerm = this.value.toLowerCase()
+//         const rows = document.querySelectorAll("#coursTableBody tr")
+//
+//         rows.forEach((row) => {
+//             const text = row.textContent.toLowerCase()
+//             row.style.display = text.includes(searchTerm) ? "" : "none"
+//         })
+//     })
+// }
 
-        rows.forEach((row) => {
-            const text = row.textContent.toLowerCase()
-            row.style.display = text.includes(searchTerm) ? "" : "none"
-        })
-    })
-}
+
+
+
 
 // Filter courses by category
+
 const categoryFilter = document.getElementById("categoryFilter")
 if (categoryFilter) {
     categoryFilter.addEventListener("change", function () {
-        // const category = this.value
-        // const rows = document.querySelectorAll("#coursTableBody tr")
         location.href = "cours.php?filter="+categoryFilter.value
-        // rows.forEach((row) => {
-        //     if (!category) {
-        //         row.style.display = ""
-        //     } else {
-        //         const rowCategory = row.querySelector("td:nth-child(2) span")
-        //         if (rowCategory && rowCategory.textContent === category) {
-        //             row.style.display = ""
-        //         } else {
-        //             row.style.display = "none"
-        //         }
-        //     }
-        // })
     })
 }
 
-// Search equipment
-const searchEquip = document.getElementById("searchEquip")
-if (searchEquip) {
-    searchEquip.addEventListener("input", function () {
-        const searchTerm = this.value.toLowerCase()
-        const cards = document.querySelectorAll("#equipementGrid > div")
-
-        cards.forEach((card) => {
-            const text = card.textContent.toLowerCase()
-            card.style.display = text.includes(searchTerm) ? "" : "none"
-        })
-    })
-}
+// // Search equipment
+// const searchEquip = document.getElementById("searchEquip")
+// if (searchEquip) {
+//     searchEquip.addEventListener("input", function () {
+//         const searchTerm = this.value.toLowerCase()
+//         const cards = document.querySelectorAll("#equipementGrid > div")
+//
+//         cards.forEach((card) => {
+//             const text = card.textContent.toLowerCase()
+//             card.style.display = text.includes(searchTerm) ? "" : "none"
+//         })
+//     })
+// }
 
 // Filter equipment by type
 const typeFilter = document.getElementById("typeFilter")
+const etatFilter = document.getElementById("etatFilter")
+const formIt = document.getElementById("filterForm")
 if (typeFilter) {
     typeFilter.addEventListener("change", function () {
-        const type = this.value
-        const cards = document.querySelectorAll("#equipementGrid > div")
-
-        cards.forEach((card) => {
-            if (!type) {
-                card.style.display = ""
-            } else {
-                const cardType = card.querySelector("p.text-sm.text-gray-500")
-                if (cardType && cardType.textContent.includes(type)) {
-                    card.style.display = ""
-                } else {
-                    card.style.display = "none"
-                }
-            }
-        })
+        formIt.submit()
     })
 }
 
 // Filter equipment by state
-const etatFilter = document.getElementById("etatFilter")
 if (etatFilter) {
     etatFilter.addEventListener("change", function () {
-        const etat = this.value
-        const cards = document.querySelectorAll("#equipementGrid > div")
-
-        cards.forEach((card) => {
-            if (!etat) {
-                card.style.display = ""
-            } else {
-                const badge = card.querySelector('span[class*="rounded-full"]')
-                if (badge && badge.textContent.toLowerCase().includes(etat.toLowerCase())) {
-                    card.style.display = ""
-                } else {
-                    card.style.display = "none"
-                }
-            }
-        })
+        formIt.submit()
     })
 }
 
@@ -261,8 +224,7 @@ if (etatFilter) {
 const coursForm = document.getElementById("coursForm")
 if (coursForm) {
     coursForm.addEventListener("submit", (e) => {
-        // PHP: Remove this preventDefault when integrating with PHP
-        // The form will submit normally to your PHP endpoint
+
 
 
 
