@@ -1,6 +1,7 @@
 <?php
 
 global $connection;
+$filter = $_GET['filter'];
 include "../connection/connect.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -113,12 +114,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div ><form method="get">
                 <select id="categoryFilter" name="filter"
                         class="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                    <option value="*">Toutes les catégories</option>
-                    <option value="Yoga">Yoga</option>
-                    <option value="Cardio">Cardio</option>
-                    <option value="Musculation">Musculation</option>
-                    <option value="Pilates">Pilates</option>
-                    <option value="CrossFit">CrossFit</option>
+                    <option value="" <?php if($filter=="" || !$filter) echo "selected"; ?>  >Toutes les catégories</option>
+                    <option <?php if($filter && $filter== "Yoga"){ echo "selected" ;}; ?> value="Yoga">Yoga</option>
+                    <option <?php if($filter && $filter== "Cardio"){ echo "selected" ;}; ?> value="Cardio">Cardio</option>
+                    <option <?php if($filter && $filter== "Musculation"){ echo "selected";} ; ?> value="Musculation">Musculation</option>
+                    <option <?php if($filter && $filter== "Pilates"){ echo "selected" ;} ?> value="Pilates">Pilates</option>
+                    <option <?php if($filter && $filter== "CrossFit"){ echo "selected" ;} ?> value="CrossFit">CrossFit</option>
                 </select></form>
             </div>
 
@@ -180,8 +181,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
 
-$filter =    $_GET['category']!="" ? $_GET['category'] : "*";
-            $request = "SELECT $filter from cours";
+            if($filter && $filter!=""){
+            $request = "SELECT * from cours where categorie='$filter' ";
+            }
+            else{
+                $request = "SELECT * from cours";
+            }
             $all = mysqli_query($connection, $request);
 
 
