@@ -1,11 +1,6 @@
 // =============================================
 // GymManager - Frontend JavaScript
 // =============================================
-// This file contains all the JavaScript functions
-// for modals, filtering, and form validation.
-// When integrating with PHP, replace the static
-// data with dynamic PHP outputs.
-// =============================================
 
 // =============================================
 // COURS (COURSES) MODAL FUNCTIONS
@@ -241,12 +236,11 @@ if (coursForm) {
             return
         }
 
-        // PHP: Form will submit to your save_cours.php
+
         // For demo, we just close the modal
         showToast("Cours enregistré avec succès!", "success")
         closeModal()
 
-        // PHP: Uncomment this line when integrating
         // this.submit();
     })
 }
@@ -255,7 +249,6 @@ if (coursForm) {
 const equipForm = document.getElementById("equipForm")
 if (equipForm) {
     equipForm.addEventListener("submit", (e) => {
-        // PHP: Remove this preventDefault when integrating with PHP
 
         const nom = document.getElementById("nomEquip").value.trim()
         const type = document.getElementById("typeEquip").value
@@ -267,11 +260,9 @@ if (equipForm) {
             return
         }
 
-        // PHP: Form will submit to your save_equipement.php
         showToast("Équipement enregistré avec succès!", "success")
         closeEquipModal()
 
-        // PHP: Uncomment this line when integrating
         // this.submit();
     })
 }
@@ -280,7 +271,6 @@ if (equipForm) {
 const assocForm = document.getElementById("assocForm")
 if (assocForm) {
     assocForm.addEventListener("submit", (e) => {
-        // PHP: Remove this preventDefault when integrating with PHP
 
         const cours = document.getElementById("assocCours").value
         const equip = document.getElementById("assocEquip").value
@@ -290,11 +280,9 @@ if (assocForm) {
             return
         }
 
-        // PHP: Form will submit to your save_association.php
         showToast("Association créée avec succès!", "success")
         closeAssocModal()
 
-        // PHP: Uncomment this line when integrating
         // this.submit();
     })
 }
